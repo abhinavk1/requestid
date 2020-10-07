@@ -1,4 +1,4 @@
-# RequestID
+# Request ID Gin middleware 
 
 Request ID middleware for Gin Framework. 
 Adds an identifier to the response using the `X-Request-ID` header. 
@@ -88,7 +88,7 @@ func main() {
 
 	r := gin.New()
 
-	r.Use(requestid.New(requestid.Config{
+    r.Use(requestid.New(requestid.Config{
         CustomRequestIdHeader: customRequestIdHeader,
     }))
 
