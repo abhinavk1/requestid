@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/gin-contrib/requestid"
+	"github.com/abhinavk1/requestid"
 	"github.com/gin-gonic/gin"
 )
 

@@ -1,12 +1,8 @@
 # RequestID
 
-[![Build Status](https://travis-ci.org/gin-contrib/requestid.svg?branch=master)](https://travis-ci.org/gin-contrib/requestid)
-[![codecov](https://codecov.io/gh/gin-contrib/requestid/branch/master/graph/badge.svg)](https://codecov.io/gh/gin-contrib/requestid)
-[![Go Report Card](https://goreportcard.com/badge/github.com/gin-contrib/requestid)](https://goreportcard.com/report/github.com/gin-contrib/requestid)
-[![GoDoc](https://godoc.org/github.com/gin-contrib/requestid?status.svg)](https://godoc.org/github.com/gin-contrib/requestid)
-[![Join the chat at https://gitter.im/gin-gonic/gin](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/gin-gonic/gin)
-
-Request ID middleware for Gin Framework. Adds an indentifier to the response using the `X-Request-ID` header. Passes the `X-Request-ID` value back to the caller if it's sent in the request headers.
+Request ID middleware for Gin Framework. 
+Adds an identifier to the response using the `X-Request-ID` header. 
+Passes the `X-Request-ID` value back to the caller if it's sent in the request headers.
 
 ## Config
 
@@ -43,7 +39,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/gin-contrib/requestid"
+	"github.com/abhinavk1/requestid"
 	"github.com/gin-gonic/gin"
 )
 
@@ -70,4 +66,38 @@ How to get the request identifier:
 r.GET("/", func(c *gin.Context) {
 	c.String(http.StatusOK, "id:"+requestid.Get(c))
 })
+```
+
+## Using a Custom Request Id Header
+
+```go
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"time"
+
+	"github.com/abhinavk1/requestid"
+	"github.com/gin-gonic/gin"
+)
+
+const customRequestIdHeader = "X-Request-Id-Custom" 
+
+func main() {
+
+	r := gin.New()
+
+	r.Use(requestid.New(requestid.Config{
+        CustomRequestIdHeader: customRequestIdHeader,
+    }))
+
+	// Example ping request.
+	r.GET("/ping", func(c *gin.Context) {
+		c.String(http.StatusOK, "pong "+fmt.Sprint(time.Now().Unix()))
+	})
+
+	// Listen and Server in 0.0.0.0:8080
+	r.Run(":8080")
+}
 ```
